@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2022/12/06 17:37:17 by amugnier         ###   ########.fr        #
+#    Updated: 2022/12/06 18:34:36 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@
 
 #Option -h or --help
 clear
-if [ "$1" == "-h" ] || [ "$1" == "--help" ]
-then
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 	echo "Usage: ./check.sh [OPTION] [FILE]"
 	echo "Check if the repo is valid to push the project "
 	echo " "
@@ -27,8 +26,7 @@ then
 	exit 0
 elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 	#choose a repo with autocompletion (tab) if the repo is not given in argument (default option)
-	if [ "$2" == "" ]
-	then
+	if [ "$2" == "" ]; then
 		echo "Usage: ./check.sh [OPTION] [FILE]"
 		echo "Try './check.sh --help' for more information."
 		echo "Please choose a repo after the option"
@@ -38,26 +36,14 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 	fi
 
 	#Check if the repo is valid (exist) and if it's a directory (not a file) go make command on this repo
-	if [ -d "$repo" ]
-	then
+	if [ -d "$repo" ]; then
+		norminette $repo | grep "Error" >norminette_error.txt
 		cd $repo
-		norminette | grep "Error" > ~/Documents/Script/Clean/norminette_error.txt
-		#Check if the norminette is valid
-		if [ -s ~/Documents/Script/Clean/norminette_error.txt ]
-		then
-			echo -e "Norminette \e[31mKO\e[0m"
-			cat ~/Documents/Script/Clean/norminette_error.txt
-			exit 1
-		else
-			echo -e "Norminette \e[32mOK\e[0m"
-			rm ~/Documents/Script/Clean/norminette_error.txt
-		fi
 		#Clean a.out, *.swp, *.o, *.gch
 		echo "Cleaning $repo..."
 		sleep 1
 		#if Makefile exist make fclean
-		if [ -f "Makefile" ]
-		then
+		if [ -f "Makefile" ]; then
 			make fclean
 			sleep 1
 			clear
@@ -66,18 +52,50 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 			sleep 1
 			clear
 		fi
-		find . -name "*.gch" -delete
-		find . -name "a.out" -delete
-		find . -name "*.swp" -delete
-		rm -rf norminette_error.txt
 		#Print delimiters
 		echo "----------------------------------------"
 		echo "Done"
 		echo "----------------------------------------"
 		ls -als
 		echo "----------------------------------------"
+		#silence cd -
+		cd - >/dev/null
+		if [ -s norminette_error.txt ]; then
+			echo -e "Norminette \e[31mKO\e[0m"
+			cat norminette_error.txt
+		else
+			echo -e "Norminette \e[32mOK\e[0m"
+		fi
+		rm norminette_error.txt
+		#Ask if the user want to push the repo
+		echo "Do you want to push the repo ? (y/n)"
+		read answer
+		#If the answer is yes push the repo if no exit and if the answer is not yes or no ask again the question without exiting the script
+		while [ "$answer" != "y" ] && [ "$answer" != "n" ]; do
+			echo "Please answer with y or n"
+			read answer
+		done
+		if [ "$answer" == "y" ]; then
+			git add .
+			echo "Please enter a commit message"
+			read commit
+			git commit -m "$commit"
+			git push
+			if [ $? -eq 0 ]; then
+				echo -e "Commit and push \e[32mDone\e[0m"
+				exit 0
+			else
+				echo -e "Commit and push \e[31mFailed\e[0m"
+				exit 1
+			fi
+		elif [ "$answer" == "n" ]; then
+			echo "Thanks, bye !"
+			exit 0
+		fi
 	else
 		echo "The repo is not valid"
+		echo "Usage: ./check.sh [OPTION] [FILE]"
+		echo "Try './check.sh --help' for more information."
 		exit 1
 	fi
 else
