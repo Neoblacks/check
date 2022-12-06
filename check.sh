@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2022/12/06 18:34:36 by amugnier         ###   ########.fr        #
+#    Updated: 2022/12/06 18:36:06 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,10 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 			read commit
 			git commit -m "$commit"
 			git push
+			sleep 1
+			#Progress bar
+			echo -ne '#####                     (33%)\r'
+			sleep 1
 			if [ $? -eq 0 ]; then
 				echo -e "Commit and push \e[32mDone\e[0m"
 				exit 0
