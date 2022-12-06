@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2022/12/06 18:40:53 by amugnier         ###   ########.fr        #
+#    Updated: 2022/12/06 18:57:46 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,19 +15,24 @@
 #Option -h or --help
 clear
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-	echo "Usage: ./check.sh [OPTION] [FILE]"
-	echo "Check if the repo is valid to push the project "
-	echo " "
+	echo "Usage: ./check.sh [OPTION] [DIR]"
+	echo "Check your repo with norminette, clean it and push it"
+	echo ""
 	echo "Options:"
-	echo "-h, --help	Display this help and exit"
-	echo "-n, --norme	Check if the norminette is valid"
-	echo "-c, --clean	clean a.out, *.swp, *.o, *.gch without checking the norminette"
-	echo "-a, --all	Check if the norminette is valid and clean a.out, *.swp, *.o, *.gch" #Default option
+	echo "	./check.sh -h, --help		Display this help and exit"
+	echo "	./check.sh -a, --all		Make and check norminette on the repo"
+	echo "	./check.sh -n, --norme		Check norminette on the repo"
+	echo "	./check.sh -c, --clean		Clean the repo without checking norminette"
+	echo ""
+	echo "Examples:"
+	echo "	./check.sh -a [repo]"
+	echo "	./check.sh -n [repo]"
+	echo "	./check.sh -c [repo]"
 	exit 0
 elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 	#choose a repo with autocompletion (tab) if the repo is not given in argument (default option)
 	if [ "$2" == "" ]; then
-		echo "Usage: ./check.sh [OPTION] [FILE]"
+		echo "Usage: ./check.sh [OPTION] [DIR]"
 		echo "Try './check.sh --help' for more information."
 		echo "Please choose a repo after the option"
 		exit 1
@@ -41,7 +46,7 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 		cd $repo
 		#Clean a.out, *.swp, *.o, *.gch
 		echo "Cleaning $repo..."
-		sleep 1
+		sleep 0.2
 		#if Makefile exist make fclean
 		if [ -f "Makefile" ]; then
 			make fclean
@@ -81,7 +86,7 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 			read commit
 			git commit -m "$commit"
 			git push
-			sleep 1
+			sleep 0.2
 			if [ $? -eq 0 ]; then
 				clear
 				echo -e "Commit and push \e[32mDone\e[0m"
@@ -96,14 +101,14 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 		fi
 	else
 		echo "The repo is not valid"
-		echo "Usage: ./check.sh [OPTION] [FILE]"
+		echo "Usage: ./check.sh [OPTION] [DIR]"
 		echo "Try './check.sh --help' for more information."
 		exit 1
 	fi
 elif [ "$1" == "-n" ] || [ "$1" == "--norme" ]; then
 	#choose a repo with autocompletion (tab) if the repo is not given in argument
 	if [ "$2" == "" ]; then
-		echo "Usage: ./check.sh [OPTION] [FILE]"
+		echo "Usage: ./check.sh [OPTION] [DIR]"
 		echo "Try './check.sh --help' for more information."
 		echo "Please choose a repo after the option"
 		exit 1
@@ -123,14 +128,14 @@ elif [ "$1" == "-n" ] || [ "$1" == "--norme" ]; then
 		rm norminette_error.txt
 	else
 		echo "The repo is not valid"
-		echo "Usage: ./check.sh [OPTION] [FILE]"
+		echo "Usage: ./check.sh [OPTION] [DIR]"
 		echo "Try './check.sh --help' for more information."
 		exit 1
 	fi
 elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
 	#choose a repo with autocompletion (tab) if the repo is not given in argument
 	if [ "$2" == "" ]; then
-		echo "Usage: ./check.sh [OPTION] [FILE]"
+		echo "Usage: ./check.sh [OPTION] [DIR]"
 		echo "Try './check.sh --help' for more information."
 		echo "Please choose a repo after the option"
 		exit 1
@@ -191,12 +196,12 @@ elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
 		fi
 	else
 		echo "The repo is not valid"
-		echo "Usage: ./check.sh [OPTION] [FILE]"
+		echo "Usage: ./check.sh [OPTION] [DIR]"
 		echo "Try './check.sh --help' for more information."
 		exit 1
 	fi
 else
-	echo "Usage: ./check.sh [OPTION] [FILE]"
+	echo "Usage: ./check.sh [OPTION] [DIR]"
 	echo "Try './check.sh --help' for more information."
 	exit 1
 fi
