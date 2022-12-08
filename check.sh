@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2022/12/06 18:57:46 by amugnier         ###   ########.fr        #
+#    Updated: 2022/12/08 11:07:34 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,10 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 			clear
 		else
 			find . -name "*.o" -delete
+			find . -name "*.gch" -delete
+			find . -name "*.swp" -delete
+			find . -name "a.out" -delete
+			find . -name "*.a" -delete
 			sleep 1
 			clear
 		fi
