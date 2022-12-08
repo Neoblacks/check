@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2022/12/08 11:07:34 by amugnier         ###   ########.fr        #
+#    Updated: 2022/12/08 19:20:20 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -163,6 +163,12 @@ elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
 			sleep 1
 			clear
 		fi
+		find . -name "*.o" -delete
+		find . -name "*.gch" -delete
+		find . -name "*.swp" -delete
+		find . -name "a.out" -delete
+		find . -name "*.a" -delete
+		rm norminette_error.txt
 		#Print delimiters
 		echo "----------------------------------------"
 		echo "Done"
