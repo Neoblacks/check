@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2022/12/09 14:36:46 by amugnier         ###   ########.fr        #
+#    Updated: 2022/12/09 14:38:40 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -183,16 +183,15 @@ elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
 			echo "Please answer with y or n"
 			read answer
 		done
-		cd $repo
 		if [ "$answer" == "y" ]; then
-			git add $repo
+		#If the answer is yes push the repo that the user choose
+			git add .
 			echo "Please enter a commit message"
 			read commit
 			git commit -m "$commit"
 			git push
-			sleep 1
+			sleep 10
 			if [ $? -eq 0 ]; then
-				clear
 				echo -e "Commit and push \e[32mDone\e[0m"
 				exit 0
 			else
