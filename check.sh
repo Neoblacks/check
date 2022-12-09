@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2022/12/09 14:38:40 by amugnier         ###   ########.fr        #
+#    Updated: 2022/12/09 14:43:26 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 		ls -als
 		echo "----------------------------------------"
 		#silence cd -
-		cd - >/dev/null
+		cd - > /dev/null
 		if [ -s norminette_error.txt ]; then
 			echo -e "Norminette \e[31mKO\e[0m"
 			cat norminette_error.txt
@@ -76,6 +76,7 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 			echo -e "Norminette \e[32mOK\e[0m"
 		fi
 		rm norminette_error.txt
+		cd $repo
 		#Ask if the user want to push the repo
 		echo "Do you want to push the repo ? (y/n)"
 		read answer
@@ -168,13 +169,16 @@ elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
 		find . -name "*.swp" -delete
 		find . -name "a.out" -delete
 		find . -name "*.a" -delete
-		rm norminette_error.txt
 		#Print delimiters
 		echo "----------------------------------------"
 		echo "Done"
 		echo "----------------------------------------"
 		ls -als
 		echo "----------------------------------------"
+		#silence cd -
+		cd - > /dev/null
+		rm norminette_error.txt
+		cd $repo
 		#Ask if the user want to push the repo
 		echo "Do you want to push the repo ? (y/n)"
 		read answer
@@ -184,14 +188,14 @@ elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
 			read answer
 		done
 		if [ "$answer" == "y" ]; then
-		#If the answer is yes push the repo that the user choose
 			git add .
 			echo "Please enter a commit message"
 			read commit
 			git commit -m "$commit"
 			git push
-			sleep 10
+			sleep 1
 			if [ $? -eq 0 ]; then
+				clear
 				echo -e "Commit and push \e[32mDone\e[0m"
 				exit 0
 			else
