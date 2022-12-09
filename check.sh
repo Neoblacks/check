@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2022/12/09 14:34:57 by amugnier         ###   ########.fr        #
+#    Updated: 2022/12/09 14:35:56 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -175,8 +175,6 @@ elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
 		echo "----------------------------------------"
 		ls -als
 		echo "----------------------------------------"
-		#silence cd -
-		cd - >/dev/null
 		#Ask if the user want to push the repo
 		echo "Do you want to push the repo ? (y/n)"
 		read answer
@@ -186,7 +184,6 @@ elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
 			read answer
 		done
 		if [ "$answer" == "y" ]; then
-			printf "Pushing $repo..."
 			git add .
 			echo "Please enter a commit message"
 			read commit
