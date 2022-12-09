@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2022/12/09 14:35:56 by amugnier         ###   ########.fr        #
+#    Updated: 2022/12/09 14:36:46 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -183,8 +183,9 @@ elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
 			echo "Please answer with y or n"
 			read answer
 		done
+		cd $repo
 		if [ "$answer" == "y" ]; then
-			git add .
+			git add $repo
 			echo "Please enter a commit message"
 			read commit
 			git commit -m "$commit"
