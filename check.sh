@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2022/12/09 14:43:26 by amugnier         ###   ########.fr        #
+#    Updated: 2022/12/11 11:38:45 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 #Option -h or --help
 clear
-if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "Usage: ./check.sh [OPTION] [DIR]"
 	echo "Check your repo with norminette, clean it and push it"
 	echo ""
@@ -29,9 +29,9 @@ if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 	echo "	./check.sh -n [repo]"
 	echo "	./check.sh -c [repo]"
 	exit 0
-elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
+elif [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
 	#choose a repo with autocompletion (tab) if the repo is not given in argument (default option)
-	if [ "$2" == "" ]; then
+	if [ "$2" = "" ]; then
 		echo "Usage: ./check.sh [OPTION] [DIR]"
 		echo "Try './check.sh --help' for more information."
 		echo "Please choose a repo after the option"
@@ -85,7 +85,7 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 			echo "Please answer with y or n"
 			read answer
 		done
-		if [ "$answer" == "y" ]; then
+		if [ "$answer" = "y" ]; then
 			git add .
 			echo "Please enter a commit message"
 			read commit
@@ -100,7 +100,7 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 				echo -e "Commit and push \e[31mFailed\e[0m"
 				exit 1
 			fi
-		elif [ "$answer" == "n" ]; then
+		elif [ "$answer" = "n" ]; then
 			echo "Thanks, bye !"
 			exit 0
 		fi
@@ -110,9 +110,9 @@ elif [ "$1" == "-a" ] || [ "$1" == "--all" ]; then
 		echo "Try './check.sh --help' for more information."
 		exit 1
 	fi
-elif [ "$1" == "-n" ] || [ "$1" == "--norme" ]; then
+elif [ "$1" = "-n" ] || [ "$1" = "--norme" ]; then
 	#choose a repo with autocompletion (tab) if the repo is not given in argument
-	if [ "$2" == "" ]; then
+	if [ "$2" = "" ]; then
 		echo "Usage: ./check.sh [OPTION] [DIR]"
 		echo "Try './check.sh --help' for more information."
 		echo "Please choose a repo after the option"
@@ -137,9 +137,9 @@ elif [ "$1" == "-n" ] || [ "$1" == "--norme" ]; then
 		echo "Try './check.sh --help' for more information."
 		exit 1
 	fi
-elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
+elif [ "$1" = "-c" ] || [ "$1" = "--clean" ]; then
 	#choose a repo with autocompletion (tab) if the repo is not given in argument
-	if [ "$2" == "" ]; then
+	if [ "$2" = "" ]; then
 		echo "Usage: ./check.sh [OPTION] [DIR]"
 		echo "Try './check.sh --help' for more information."
 		echo "Please choose a repo after the option"
@@ -187,7 +187,7 @@ elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
 			echo "Please answer with y or n"
 			read answer
 		done
-		if [ "$answer" == "y" ]; then
+		if [ "$answer" = "y" ]; then
 			git add .
 			echo "Please enter a commit message"
 			read commit
@@ -202,7 +202,7 @@ elif [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
 				echo -e "Commit and push \e[31mFailed\e[0m"
 				exit 1
 			fi
-		elif [ "$answer" == "n" ]; then
+		elif [ "$answer" = "n" ]; then
 			echo "Thanks, bye !"
 			exit 0
 		fi
