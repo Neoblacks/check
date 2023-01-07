@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2022/12/11 11:38:45 by amugnier         ###   ########.fr        #
+#    Updated: 2023/01/07 19:00:53 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,10 +70,10 @@ elif [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
 		#silence cd -
 		cd - > /dev/null
 		if [ -s norminette_error.txt ]; then
-			echo -e "Norminette \e[31mKO\e[0m"
+			echo "Norminette \e[31mKO\e[0m"
 			cat norminette_error.txt
 		else
-			echo -e "Norminette \e[32mOK\e[0m"
+			echo "Norminette \e[32mOK\e[0m"
 		fi
 		rm norminette_error.txt
 		cd $repo
@@ -94,10 +94,10 @@ elif [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
 			sleep 0.2
 			if [ $? -eq 0 ]; then
 				clear
-				echo -e "Commit and push \e[32mDone\e[0m"
+				echo "Commit and push \e[32mDone\e[0m"
 				exit 0
 			else
-				echo -e "Commit and push \e[31mFailed\e[0m"
+				echo "Commit and push \e[31mFailed\e[0m"
 				exit 1
 			fi
 		elif [ "$answer" = "n" ]; then
@@ -125,10 +125,10 @@ elif [ "$1" = "-n" ] || [ "$1" = "--norme" ]; then
 	if [ -d "$repo" ]; then
 		norminette $repo | grep "Error" >norminette_error.txt
 		if [ -s norminette_error.txt ]; then
-			echo -e "Norminette \e[31mKO\e[0m"
+			echo "Norminette \e[31mKO\e[0m"
 			cat norminette_error.txt
 		else
-			echo -e "Norminette \e[32mOK\e[0m"
+			echo "Norminette \e[32mOK\e[0m"
 		fi
 		rm norminette_error.txt
 	else
@@ -177,7 +177,6 @@ elif [ "$1" = "-c" ] || [ "$1" = "--clean" ]; then
 		echo "----------------------------------------"
 		#silence cd -
 		cd - > /dev/null
-		rm norminette_error.txt
 		cd $repo
 		#Ask if the user want to push the repo
 		echo "Do you want to push the repo ? (y/n)"
@@ -196,10 +195,10 @@ elif [ "$1" = "-c" ] || [ "$1" = "--clean" ]; then
 			sleep 1
 			if [ $? -eq 0 ]; then
 				clear
-				echo -e "Commit and push \e[32mDone\e[0m"
+				echo "Commit and push \e[32mDone\e[0m"
 				exit 0
 			else
-				echo -e "Commit and push \e[31mFailed\e[0m"
+				echo "Commit and push \e[31mFailed\e[0m"
 				exit 1
 			fi
 		elif [ "$answer" = "n" ]; then
