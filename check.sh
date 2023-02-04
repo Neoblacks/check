@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 16:58:58 by amugnier          #+#    #+#              #
-#    Updated: 2023/01/07 19:00:53 by amugnier         ###   ########.fr        #
+#    Updated: 2023/02/04 14:14:35 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,9 +40,13 @@ elif [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
 		repo=$2
 	fi
 
-	#Check if the repo is valid (exist) and if it's a directory (not a file) go make command on this repo
+	#Check if the repo is valid (exist) and if it's a directory (not a file) go make command on this repo and check if repo = "/" if yes exit the script
 	if [ -d "$repo" ]; then
-		norminette $repo | grep "Error" >norminette_error.txt
+		if [ "$repo" = "/" ]; then
+			echo "You can't check the root directory"
+			exit 1
+		fi
+		norminette  $repo/includes/ $repo/srcs/ | grep "Error" > ~/Documents/Script/Check/norminette_error.txt
 		cd $repo
 		#Clean a.out, *.swp, *.o, *.gch
 		echo "Cleaning $repo..."
@@ -67,15 +71,13 @@ elif [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
 		echo "----------------------------------------"
 		ls -als
 		echo "----------------------------------------"
-		#silence cd -
-		cd - > /dev/null
 		if [ -s norminette_error.txt ]; then
 			echo "Norminette \e[31mKO\e[0m"
 			cat norminette_error.txt
 		else
 			echo "Norminette \e[32mOK\e[0m"
 		fi
-		rm norminette_error.txt
+		rm ~/Documents/Script/Check/norminette_error.txt
 		cd $repo
 		#Ask if the user want to push the repo
 		echo "Do you want to push the repo ? (y/n)"
@@ -123,14 +125,18 @@ elif [ "$1" = "-n" ] || [ "$1" = "--norme" ]; then
 
 	#Check if the repo is valid (exist) and if it's a directory (not a file) go make command on this repo
 	if [ -d "$repo" ]; then
-		norminette $repo | grep "Error" >norminette_error.txt
+		if [ "$repo" = "/" ]; then
+			echo "You can't check the root directory"
+			exit 1
+		fi
+		norminette  $repo/includes/ $repo/srcs/ | grep "Error" >norminette_error.txt
 		if [ -s norminette_error.txt ]; then
 			echo "Norminette \e[31mKO\e[0m"
 			cat norminette_error.txt
 		else
 			echo "Norminette \e[32mOK\e[0m"
 		fi
-		rm norminette_error.txt
+		rm ~/Documents/Script/Check/norminette_error.txt
 	else
 		echo "The repo is not valid"
 		echo "Usage: ./check.sh [OPTION] [DIR]"
@@ -150,6 +156,10 @@ elif [ "$1" = "-c" ] || [ "$1" = "--clean" ]; then
 
 	#Check if the repo is valid (exist) and if it's a directory (not a file) go make command on this repo
 	if [ -d "$repo" ]; then
+		if [ "$repo" = "/" ]; then
+			echo "You can't check the root directory"
+			exit 1
+		fi
 		cd $repo
 		#Clean a.out, *.swp, *.o, *.gch
 		echo "Cleaning $repo..."
@@ -175,8 +185,6 @@ elif [ "$1" = "-c" ] || [ "$1" = "--clean" ]; then
 		echo "----------------------------------------"
 		ls -als
 		echo "----------------------------------------"
-		#silence cd -
-		cd - > /dev/null
 		cd $repo
 		#Ask if the user want to push the repo
 		echo "Do you want to push the repo ? (y/n)"
